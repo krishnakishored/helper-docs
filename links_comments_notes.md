@@ -14,6 +14,12 @@ splitline() method is used to split the lines at line boundaries.
 https://www.geeksforgeeks.org/python-string-splitlines/
 https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-i-hello-world
 
+
+CMAKE
+https://medium.com/audelabs/c-development-using-visual-studio-code-cmake-and-lldb-d0f13d38c563
+https://stackoverflow.com/questions/7724569/debug-vs-release-in-cmake%
+
+
 #### Comments and Questions
 what is the significance of trialing slash in route '/' in flask?
 ******************************************************************************

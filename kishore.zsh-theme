@@ -111,13 +111,25 @@ prompt_context () {
     fi
 }
 
+# Function to append language version string
+append_version_string() {
+    local version_string=""
+    if [[ -f .nvmrc ]]; then
+        version_string+="%F{green} | node:$(node -v)%f"
+    fi
+    if [[ -f .python-version ]]; then
+        version_string+="%F{yellow} | py:v$(python --version 2>&1 | cut -d " " -f 2)%f"
+    fi
+    echo $version_string
+}
+
 set_prompt () {
     # required for the prompt
     setopt prompt_subst
     autoload zsh/terminfo
 
     # ######### PROMPT #########
-    PROMPT='${PROMPT_HEAD}$(prompt_context)$(git_prompt_info)
+    PROMPT='${PROMPT_HEAD}$(prompt_context)$(append_version_string)$(git_prompt_info)
 ${GREEN_START_P1}'
     RPROMPT='${PR_RESET}${GREEN_END}${PR_RESET}'
     #RPROMPT='${PR_RESET}$(git_prompt_info)$(svn_prompt_info)${PR_YELLOW}%D{%R.%S %a %b %d %Y} ${GREEN_END}${PR_RESET}'

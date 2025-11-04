@@ -38,6 +38,19 @@ for COLOR in CYAN WHITE YELLOW MAGENTA BLACK BLUE RED DEFAULT GREEN GREY; do
 done
 PR_RESET="%{$reset_color%}"
 
+# Set LS_COLORS for directory listing colors
+# Color codes: 30=black, 31=red, 32=green, 33=yellow, 34=blue, 35=magenta, 36=cyan, 37=white
+# Add 1; prefix for bright/bold (e.g., 1;36 = bright cyan)
+# File types: di=directories, ln=symbolic_links, so=sockets, pi=pipes, ex=executables, 
+#            bd=block_devices, cd=character_devices, su=setuid, sg=setgid, tw=sticky_other_writable, ow=other_writable
+# Shell scripts: *.sh, *.bash, *.zsh, *.fish in bright green (1;32)
+export LS_COLORS="di=1;34:ln=35:so=32:pi=33:ex=31:bd=36;46:cd=36;43:su=30;41:sg=30;46:tw=30;42:ow=30;43:*.sh=1;32:*.bash=1;32:*.zsh=1;32:*.fish=1;32:*.csh=1;32:*.ksh=1;32"
+
+# Set LSCOLORS for BSD ls (macOS default)
+# Format: pairs of foreground/background colors for: directory, symlink, socket, pipe, executable, block_device, char_device, setuid, setgid, sticky_other_writable, other_writable
+# Colors: a=black, b=red, c=green, d=brown, e=blue, f=magenta, g=cyan, h=light_grey, A=bold_black, B=bold_red, C=bold_green, D=bold_brown, E=bold_blue, F=bold_magenta, G=bold_cyan, H=bold_light_grey, x=default
+export LSCOLORS="exfxcxdxbxexedabagacad"
+
 # RED_START="${PR_RESET}${PR_RED}➜ "
 RED_START="${PR_RESET}${PR_RED}@ "
 RED_END="${PR_RESET}${PR_BRIGHT_RED} ✭"
@@ -61,7 +74,7 @@ ZSH_THEME_SVN_PROMPT_DIRTY="${VCS_DIRTY_COLOR} ✘${VCS_SUFIX_COLOR}"
 ZSH_THEME_SVN_PROMPT_CLEAN="${VCS_CLEAN_COLOR} ✔${VCS_SUFIX_COLOR}"
 # ########## SVN ###########
 # ########## GIT ###########
-ZSH_THEME_GIT_PROMPT_PREFIX="${PR_RESET}${PR_CYAN} | git:"
+ZSH_THEME_GIT_PROMPT_PREFIX="${PR_RESET}${PR_BLUE} | git:"
 ZSH_THEME_GIT_PROMPT_SUFFIX=""
 ZSH_THEME_GIT_PROMPT_DIRTY="${VCS_DIRTY_COLOR} ✘"
 ZSH_THEME_GIT_PROMPT_CLEAN="${VCS_CLEAN_COLOR} ✔"
@@ -127,7 +140,6 @@ set_prompt () {
     # required for the prompt
     setopt prompt_subst
     autoload zsh/terminfo
-
     # ######### PROMPT #########
     PROMPT='${PROMPT_HEAD}$(prompt_context)$(append_version_string)$(git_prompt_info)
 ${GREEN_START_P1}'
@@ -137,5 +149,20 @@ ${GREEN_START_P1}'
     PROMPT2='${GREEN_BASE_START}${PR_RESET} %_ ${GREEN_BASE_START}${PR_RESET} '
     # ######### PROMPT #########
 }
+
+# set_prompt () {
+#     # required for the prompt
+#     setopt prompt_subst
+#     autoload zsh/terminfo
+
+#     # ######### PROMPT #########
+#     PROMPT='${PROMPT_HEAD}$(prompt_context)$(append_version_string)$(git_username)$(git_prompt_info)
+# ${GREEN_START_P1}'
+#     RPROMPT='${PR_RESET}${GREEN_END}${PR_RESET}'
+#     #RPROMPT='${PR_RESET}$(git_prompt_info)$(svn_prompt_info)${PR_YELLOW}%D{%R.%S %a %b %d %Y} ${GREEN_END}${PR_RESET}'
+#     # Matching continuation prompt
+#     PROMPT2='${GREEN_BASE_START}${PR_RESET} %_ ${GREEN_BASE_START}${PR_RESET} '
+#     # ######### PROMPT #########
+# }
 
 set_prompt

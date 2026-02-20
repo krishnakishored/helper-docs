@@ -16,3 +16,22 @@
 ## References
 1. https://gist.github.com/myusuf3/7f645819ded92bda6677
 1. https://www.vogella.com/tutorials/GitSubmodules/article.html
+
+-----
+## Troubleshooting: Permission denied to GitHub repo
+
+If you see an error like:
+
+  ERROR: Permission to <repo>.git denied to <user>.
+  fatal: Could not read from remote repository.
+
+You may need to add your SSH key to the agent. Run:
+
+```sh
+ssh-add --apple-use-keychain ~/.ssh/id_github_ed25519_krishnakishored
+```
+
+This should resolve the issue if your SSH key is correctly configured for your GitHub account.
+
+
+

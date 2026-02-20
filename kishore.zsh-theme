@@ -1,168 +1,109 @@
 #!/usr/bin/env zsh
-# #
-# # # location : custom/themes/kishore.zsh-theme
-# # # README 
-# # 
-# # This theme provides two customizable header functionalities:
-# # a) displaying a pseudo-random message from a database of quotations
-# # (https://en.wikipedia.org/wiki/Fortune_%28Unix%29)
-# # b) displaying randomly command line tips from The command line fu
-# # (http://www.commandlinefu.com) community: in order to make use of this functionality
-# # you will need Internet connection.
-# # This theme provides as well information for the current user's context, like;
-# # branch and status for the current version control system (git and svn currently
-# # supported) and time, presented to the user in a non invasive volatile way.
-# #
-# # #REQUIREMENTS
-# # This theme requires wget::
-# # -Homebrew-osx- brew install wget
-# # -Debian/Ubuntu- apt-get install wget
-# # and fortune ::
-# # -Homebrew-osx- brew install fortune
-# # -Debian/Ubuntu- apt-get install fortune
-# #
-# # optionally:
-# # -Oh-myzsh vcs plug-ins git and svn.
-# # -Solarized theme (https://github.com/altercation/solarized/)
-# # -OS X: iTerm 2 (http://www.iterm2.com/)
-# # -font Source code pro (https://github.com/adobe/source-code-pro)
-# #
-# # This theme's look and feel is based on the Aaron Toponce's zsh theme, more info:
-# # http://pthree.org/2008/11/23/727/
-# # and  adben.zsh-theme
-# # enjoy!
-########## COLOR ###########
+# ~/.oh-my-zsh/themes/kishore.zsh-theme
+# Clean theme with:
+# 1) two-line prompt
+# 2) git branch/status via oh-my-zsh git plugin
+# 3) git account label read from ~/.gitconfig (single source of truth)
+
+########## COLORS ##########
 for COLOR in CYAN WHITE YELLOW MAGENTA BLACK BLUE RED DEFAULT GREEN GREY; do
-    eval PR_$COLOR='%{$fg[${(L)COLOR}]%}'
-    eval PR_BRIGHT_$COLOR='%{$fg_bold[${(L)COLOR}]%}'
+  eval PR_$COLOR='%{$fg[${(L)COLOR}]%}'
+  eval PR_BRIGHT_$COLOR='%{$fg_bold[${(L)COLOR}]%}'
 done
 PR_RESET="%{$reset_color%}"
 
-# Set LS_COLORS for directory listing colors
-# Color codes: 30=black, 31=red, 32=green, 33=yellow, 34=blue, 35=magenta, 36=cyan, 37=white
-# Add 1; prefix for bright/bold (e.g., 1;36 = bright cyan)
-# File types: di=directories, ln=symbolic_links, so=sockets, pi=pipes, ex=executables, 
-#            bd=block_devices, cd=character_devices, su=setuid, sg=setgid, tw=sticky_other_writable, ow=other_writable
-# Shell scripts: *.sh, *.bash, *.zsh, *.fish in bright green (1;32)
+# Optional ls colors (kept from your previous setup)
 export LS_COLORS="di=1;34:ln=35:so=32:pi=33:ex=31:bd=36;46:cd=36;43:su=30;41:sg=30;46:tw=30;42:ow=30;43:*.sh=1;32:*.bash=1;32:*.zsh=1;32:*.fish=1;32:*.csh=1;32:*.ksh=1;32"
-
-# Set LSCOLORS for BSD ls (macOS default)
-# Format: pairs of foreground/background colors for: directory, symlink, socket, pipe, executable, block_device, char_device, setuid, setgid, sticky_other_writable, other_writable
-# Colors: a=black, b=red, c=green, d=brown, e=blue, f=magenta, g=cyan, h=light_grey, A=bold_black, B=bold_red, C=bold_green, D=bold_brown, E=bold_blue, F=bold_magenta, G=bold_cyan, H=bold_light_grey, x=default
 export LSCOLORS="exfxcxdxbxexedabagacad"
 
-# RED_START="${PR_RESET}${PR_RED}➜ "
+########## STYLE ##########
 RED_START="${PR_RESET}${PR_RED}@ "
-RED_END="${PR_RESET}${PR_BRIGHT_RED} ✭"
-#RED_START="${PR_RESET}${PR_GREY}<${PR_RESET}${PR_RED}<${PR_BRIGHT_RED}<${PR_RESET} "
-#RED_END="${PR_RESET}${PR_BRIGHT_RED}>${PR_RESET}${PR_RED}>${PR_GREY}>${PR_RESET} "
-GREEN_END="${PR_RESET}${PR_BRIGHT_GREEN} ✭"
+GREEN_END="${PR_RESET}${PR_BRIGHT_GREEN} |"
 GREEN_BASE_START="${PR_RESET}${PR_GREEN}➜ "
 GREEN_START_P1="${PR_RESET}${GREEN_BASE_START}${PR_RESET} "
-# GREEN_END="${PR_RESET}${PR_BRIGHT_GREEN}>${PR_RESET}${PR_GREEN}>${PR_GREY}>${PR_RESET} "
-# GREEN_BASE_START="${PR_RESET}${PR_GREY}>${PR_RESET}${PR_GREEN}>${PR_BRIGHT_GREEN}>${PR_RESET}"
-# GREEN_START_P1="${PR_RESET}${GREEN_BASE_START}${PR_RESET} "
-DIVISION="${PR_RESET}${PR_RED} < ${PR_RESET}"
+
+########## GIT/SVN PROMPT SETTINGS ##########
 VCS_DIRTY_COLOR="${PR_RESET}${PR_YELLOW}"
 VCS_CLEAN_COLOR="${PR_RESET}${PR_GREEN}"
-VCS_SUFIX_COLOR="${PR_RESET}${PR_RED}› ${PR_RESET}"
-# ########## COLOR ###########
-# ########## SVN ###########
+
 ZSH_THEME_SVN_PROMPT_PREFIX="${PR_RESET}${PR_RED}‹svn:"
 ZSH_THEME_SVN_PROMPT_SUFFIX=""
-ZSH_THEME_SVN_PROMPT_DIRTY="${VCS_DIRTY_COLOR} ✘${VCS_SUFIX_COLOR}"
-ZSH_THEME_SVN_PROMPT_CLEAN="${VCS_CLEAN_COLOR} ✔${VCS_SUFIX_COLOR}"
-# ########## SVN ###########
-# ########## GIT ###########
-ZSH_THEME_GIT_PROMPT_PREFIX="${PR_RESET}${PR_BLUE} | git:"
+ZSH_THEME_SVN_PROMPT_DIRTY="${VCS_DIRTY_COLOR} ✘"
+ZSH_THEME_SVN_PROMPT_CLEAN="${VCS_CLEAN_COLOR} ✔"
+
+ZSH_THEME_GIT_PROMPT_PREFIX="${PR_RESET}${PR_BLUE} | gb: "
 ZSH_THEME_GIT_PROMPT_SUFFIX=""
 ZSH_THEME_GIT_PROMPT_DIRTY="${VCS_DIRTY_COLOR} ✘"
 ZSH_THEME_GIT_PROMPT_CLEAN="${VCS_CLEAN_COLOR} ✔"
-# ZSH_THEME_GIT_PROMPT_DIRTY="${VCS_DIRTY_COLOR} ✘${VCS_SUFIX_COLOR}"
-# ZSH_THEME_GIT_PROMPT_CLEAN="${VCS_CLEAN_COLOR} ✔${VCS_SUFIX_COLOR}"
-
 ZSH_THEME_GIT_PROMPT_ADDED="${PR_RESET}${PR_YELLOW} ✚${PR_RESET}"
 ZSH_THEME_GIT_PROMPT_MODIFIED="${PR_RESET}${PR_YELLOW} ✹${PR_RESET}"
 ZSH_THEME_GIT_PROMPT_DELETED="${PR_RESET}${PR_YELLOW} ✖${PR_RESET}"
 ZSH_THEME_GIT_PROMPT_RENAMED="${PR_RESET}${PR_YELLOW} ➜${PR_RESET}"
 ZSH_THEME_GIT_PROMPT_UNMERGED="${PR_RESET}${PR_YELLOW} ═${PR_RESET}"
 ZSH_THEME_GIT_PROMPT_UNTRACKED="${PR_RESET}${PR_YELLOW} ✭${PR_RESET}"
-# ########## GIT ###########
-function precmd {
-    #gets the fortune
-    ps1_fortune () {
-        #Choose from all databases, regardless of whether they are considered "offensive"
-        fortune -a
-    }
-    #obtains the tip
-    ps1_command_tip () {
-        wget -qO - http://www.commandlinefu.com/commands/random/plaintext | sed 1d | sed '/^$/d'
-    }
-    prompt_header () {
-        if [[ "true" == "$ENABLE_COMMAND_TIP" ]]; then
-            ps1_command_tip
-        else
-            ps1_fortune
-        fi
-    }
-    # PROMPT_HEAD="${RED_START}${PR_YELLOW}$(prompt_header)${PR_RESET}"
-    PROMPT_HEAD="${RED_START}${PR_YELLOW}${PR_RESET}"
 
-    # set a simple variable to show when in screen
-    if [[ -n "${WINDOW}" ]]; then
-        SCREEN=""
-    fi
+########## HELPERS ##########
+precmd() {
+  # Keep precmd lightweight.
+  PROMPT_HEAD="${RED_START}${PR_YELLOW}${PR_RESET}"
 }
 
-# Context: user@directory or just directory
-prompt_context () {
-    if [[ "$USER" != "$DEFAULT_USER" || -n "$SSH_CLIENT" ]]; then
-        # echo -n "${PR_RESET}${PR_RED}$USER@%m${PR_RESET}${PR_BRIGHT_YELLOW}%~%<<${PR_RESET}"
-        echo -n "${PR_MAGENTA}%~%<<${PR_RESET}"
-    else
-        echo -n "${PR_RESET}${PR_MAGENTA}%~%<<${PR_RESET}"
-    fi
+prompt_context() {
+  # Current directory path
+  echo -n "${PR_RESET}${PR_MAGENTA}%~%<<${PR_RESET}"
 }
 
-# Function to append language version string
 append_version_string() {
-    local version_string=""
-    if [[ -f .nvmrc ]]; then
-        version_string+="%F{green} | node:$(node -v)%f"
-    fi
-    if [[ -f .python-version ]]; then
-        version_string+="%F{yellow} | py:v$(python --version 2>&1 | cut -d " " -f 2)%f"
-    fi
-    echo $version_string
+  # Show node/python versions only when project markers exist.
+  local version_string=""
+
+  if [[ -f .nvmrc && $+commands[node] -eq 1 ]]; then
+    version_string+="%F{green} | node:$(node -v)%f"
+  fi
+
+  if [[ -f .python-version && $+commands[python] -eq 1 ]]; then
+    version_string+="%F{yellow} | py:v$(python --version 2>&1 | awk '{print $2}')%f"
+  fi
+
+  echo "$version_string"
 }
 
-set_prompt () {
-    # required for the prompt
-    setopt prompt_subst
-    autoload zsh/terminfo
-    # ######### PROMPT #########
-    PROMPT='${PROMPT_HEAD}$(prompt_context)$(append_version_string)$(git_prompt_info)
+git_account_prompt() {
+  # Show account only inside git repos.
+  command git rev-parse --is-inside-work-tree >/dev/null 2>&1 || return
+
+  local remote host account
+  remote="$(git config --get remote.origin.url 2>/dev/null)"
+
+  # SSH form: git@host-alias:org/repo.git
+  if [[ "$remote" =~ '^git@([^:]+):' ]]; then
+    host="${match[1]}"
+  # HTTPS form: https://host/org/repo.git
+  elif [[ "$remote" =~ '^https?://([^/]+)/' ]]; then
+    host="${match[1]}"
+  fi
+
+  [[ -z "$host" ]] && host="unknown"
+
+  # Read label from ~/.gitconfig:
+  # [prompt "account"]
+  #   github-kcodek = gh-kcodek
+  account="$(git config --global --get "prompt.account.${host}" 2>/dev/null)"
+  [[ -z "$account" ]] && account="$host"
+
+  echo "%F{cyan} | ✭ ${account}%f"
+}
+
+########## PROMPT ##########
+set_prompt() {
+  setopt prompt_subst
+  autoload zsh/terminfo
+
+  PROMPT='${PROMPT_HEAD}$(prompt_context)$(append_version_string)$(git_prompt_info)$(git_account_prompt)
 ${GREEN_START_P1}'
-    RPROMPT='${PR_RESET}${GREEN_END}${PR_RESET}'
-    #RPROMPT='${PR_RESET}$(git_prompt_info)$(svn_prompt_info)${PR_YELLOW}%D{%R.%S %a %b %d %Y} ${GREEN_END}${PR_RESET}'
-    # Matching continuation prompt
-    PROMPT2='${GREEN_BASE_START}${PR_RESET} %_ ${GREEN_BASE_START}${PR_RESET} '
-    # ######### PROMPT #########
+
+  RPROMPT='${PR_RESET}${GREEN_END}${PR_RESET}'
+  PROMPT2='${GREEN_BASE_START}${PR_RESET} %_ ${GREEN_BASE_START}${PR_RESET} '
 }
-
-# set_prompt () {
-#     # required for the prompt
-#     setopt prompt_subst
-#     autoload zsh/terminfo
-
-#     # ######### PROMPT #########
-#     PROMPT='${PROMPT_HEAD}$(prompt_context)$(append_version_string)$(git_username)$(git_prompt_info)
-# ${GREEN_START_P1}'
-#     RPROMPT='${PR_RESET}${GREEN_END}${PR_RESET}'
-#     #RPROMPT='${PR_RESET}$(git_prompt_info)$(svn_prompt_info)${PR_YELLOW}%D{%R.%S %a %b %d %Y} ${GREEN_END}${PR_RESET}'
-#     # Matching continuation prompt
-#     PROMPT2='${GREEN_BASE_START}${PR_RESET} %_ ${GREEN_BASE_START}${PR_RESET} '
-#     # ######### PROMPT #########
-# }
 
 set_prompt

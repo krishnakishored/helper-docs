@@ -1,0 +1,37 @@
+[init]
+	defaultBranch = main
+[user]
+  useConfigOnly = true
+
+
+
+[prompt "account"]
+  github-haygroup = gh-haygroup
+  github-kcodek = gh-kcodek
+  github-krishnakishored = gh-krishnakishored
+  gitlab-kcodek = gl-kcodek
+
+
+
+# Default identity by filesystem location - gitdir gives sane defaults
+[includeIf "gitdir:~/kf/HayGroup/"]
+  path = ~/.gitconfig-haygroup
+[includeIf "gitdir:~/coding/gitlab/"]
+  path = ~/.gitconfig-gitlab-kcodek
+[includeIf "gitdir:~/coding/github/"]
+  path = ~/.gitconfig-kcodek
+
+
+# keep remote-based includes after gitdir
+# Override by remote host alias (more specific)
+[includeIf "hasconfig:remote.*.url:git@github-haygroup:**"]
+  path = ~/.gitconfig-haygroup
+
+[includeIf "hasconfig:remote.*.url:git@github-kcodek:**"]
+  path = ~/.gitconfig-kcodek
+
+[includeIf "hasconfig:remote.*.url:git@github-krishnakishored:**"]
+  path = ~/.gitconfig-krishnakishored
+
+[includeIf "hasconfig:remote.*.url:git@gitlab-kcodek:**"]
+  path = ~/.gitconfig-gitlab-kcodek
